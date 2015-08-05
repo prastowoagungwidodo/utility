@@ -1,0 +1,25 @@
+{
+	"name" : "transformatika/utility",
+	"type" : "library",
+	"description" : "Utility",
+	"keywords" : [
+		"RBAC",
+		"Framework"
+	],
+	"homepage" : "http://www.transformatika.com",
+	"license" : "MIT",
+	"authors" : [{
+			"name" : "Prastowo Agung Widodo",
+			"email" : "agung@transformatika.com"
+		}
+	],
+	"support" : {
+		"issues" : "https://github.com/transformatika/utility/issues",
+		"email" : "support@transformatika.com"
+	},
+	"autoload" : {
+		"psr-0" : {
+			"Transformatika\\Utility\\" : "src/"
+		}
+	}
+}
