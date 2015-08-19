@@ -28,7 +28,10 @@ class Fn
         12 => 'December',
     );
 
-    //Generate ID
+    /**
+     * Generate ID
+     * @return String
+     */
     public static function generateId()
     {
         $microtime         = microtime(true);
@@ -37,9 +40,13 @@ class Fn
         $uniqid            = ($includeFloatMtime + $random);
         return base_convert($uniqid, 10, 36);
     }
-    //start of added by ziki
 
-    //Limit Character
+    /**
+     * Limit Character
+     * @param  String
+     * @param  Integer
+     * @return String
+     */
     public static function limitChar($content, $limit)
     {
         if (strlen($content) <= $limit) {
@@ -50,14 +57,24 @@ class Fn
         }
     }
 
-    //Limit Word
+    /**
+     * Limit Word
+     * @param  String
+     * @param  Integer
+     * @return String
+     */
     public static function limitWord($string, $word_limit)
     {
         $words = explode(" ", $string);
         return implode(" ", array_splice($words, 0, $word_limit));
     }
 
-    //Zero Number
+    /**
+     * Zero Number
+     * @param  Integer
+     * @param  Integer
+     * @return Integer
+     */
     public static function zeroNumber($number = 0, $lenght = 5)
     {
         $no = '';
@@ -71,7 +88,11 @@ class Fn
         return $no;
     }
 
-    //Timestamp
+    /**
+     * Timestamp
+     * @param  Timestamp / Date
+     * @return String
+     */
     public static function timeStamp($time)
     {
         $different = time() - $time;
@@ -148,7 +169,12 @@ class Fn
         }
     }
 
-    //Byte Format
+    /**
+     * Byte Format
+     * @param  Integer
+     * @param  Integer
+     * @return String
+     */
     public static function bytesFormat($size, $precision = 2)
     {
         $base = log($size) / log(1024);
@@ -157,7 +183,13 @@ class Fn
         return round(pow(1024, $base - floor($base)), $precision) . $suffix[floor($base)];
     }
 
-    //Decimal to Alphanumeric
+    /**
+     * Decimal To Alphanumeric
+     * @param  Integer
+     * @param  Integer
+     * @param  Boolean
+     * @return String
+     */
     public static function decimalToAlphanumeric($number, $base = 64, $index = false)
     {
         if (!$base) {
@@ -176,7 +208,14 @@ class Fn
         return $out;
     }
 
-    //Thumbnail
+    /**
+     * Thumbnail
+     * @param  String
+     * @param  String
+     * @param  String
+     * @param  String
+     * @return String
+     */
     public static function makeThumbnail($uploadDir, $image, $thumbnailPath, $thumbnailWords)
     {
         $thumbnailWidth = 50;
@@ -217,7 +256,14 @@ class Fn
         return "$thumbnailWords".'_'."$image";
     }
 
-    //Resize
+    /**
+     * Resize (Sama dengan thumbnail)
+     * @param  String
+     * @param  String
+     * @param  Integer
+     * @param  Boolean
+     * @return String
+     */
     public static function resize($in_file, $out_file, $new_width, $new_height = false)
     {
         $image     = null;
@@ -255,7 +301,11 @@ class Fn
         return $ret;
     }
 
-    //PRE
+    /**
+     * Pre
+     * @param  String
+     * @return String
+     */
     public static function pre($data)
     {
         echo '<pre>';
@@ -263,7 +313,11 @@ class Fn
         echo '</pre>';
     }
 
-    //Month List
+    /**
+     * Month List
+     * @param  Integer
+     * @return String
+     */
     public static function monthList($length = 0)
     {
         $monthNameArray = explode(',', $this->monthNames);
@@ -278,7 +332,11 @@ class Fn
         return $monthList;
     }
 
-    //Day List
+    /**
+     * Day List
+     * @param  Integer
+     * @return String
+     */
     public static function dayList($length = 0)
     {
         $dayNameArray = explode(',', $this->dayNames);
@@ -293,7 +351,11 @@ class Fn
         return $dayList;
     }
 
-    //Datetime SQL Check
+    /**
+     * Validate Date Time SQL
+     * @param  DateTime
+     * @return Boolean
+     */
     public static function isDateTimeSQL($dateTime)
     {
         if (preg_match('/[12][09][0-9]{2}[-](01|02|03|04|05|06|07|08|09|10|11|12)[-](0|1|2|3)[0-9] (0|1|2)[0-9]([:](0|1|2|3|4|5)[0-9]){2}/', $dateTime)) {
@@ -303,7 +365,11 @@ class Fn
         }
     }
 
-    //Date SQL Check
+    /**
+     * Validate Date SQL
+     * @param  Date
+     * @return Boolean
+     */
     public static function isDateSQL($date)
     {
         if (@preg_match('/^([0-9]{2,4})-([0-9]{1,2})-([0-9]{1,2})$/', $date)) {
@@ -313,7 +379,11 @@ class Fn
         }
     }
 
-    //Validate Date
+    /**
+     * Validate Date
+     * @param  Date
+     * @return boolean
+     */
     public static function isValidDate($date)
     {
         $d = $this->splitDate($date, 'int');
@@ -324,7 +394,11 @@ class Fn
         }
     }
 
-    //Valid Time
+    /**
+     * Validate Time
+     * @param  Time
+     * @return boolean
+     */
     public static function isValidTime($time)
     {
         if (preg_match('^(0|1|2)[0-9]([:](0|1|2|3|4|5)[0-9]){2}$', $time)) {
@@ -341,7 +415,11 @@ class Fn
         }
     }
 
-    //Valid DateTime
+    /**
+     * Validate DateTime
+     * @param  DateTime
+     * @return boolean
+     */
     public static function isValidDateTime($dateTime)
     {
         $t = explode(' ', $dateTime);
@@ -352,7 +430,12 @@ class Fn
         }
     }
 
-    //Split Date
+    /**
+     * Split Date
+     * @param  DateTime
+     * @param  String
+     * @return Array
+     */
     public static function splitDate($dateTime, $type = 'int')
     {
         $t  = explode(' ', $dateTime);
@@ -377,7 +460,11 @@ class Fn
         return $x;
     }
 
-    //Unix Time
+    /**
+     * Unix Time
+     * @param  DateTime
+     * @return UnixTime
+     */
     public static function unixTime($dateTime)
     {
         $t = $this->splitDate($dateTime, 'int');
@@ -385,7 +472,13 @@ class Fn
         return mktime($t['hour'], $t['minute'], $t['second'], $t['month'], $t['date'], $t['year']);
     }
 
-    //Previous Date
+    /**
+     * Previous Date
+     * @param  Date
+     * @param  integer
+     * @param  string
+     * @return Date
+     */
     public static function prevDate($date, $interval = 1, $newFormat = "Y-m-d")
     {
         $x            = $this->splitDate($date, 'int');
@@ -396,7 +489,13 @@ class Fn
         return date($newFormat, $prevUnixTime);
     }
 
-    //Next Date
+    /**
+     * Next Date
+     * @param  Date
+     * @param  integer
+     * @param  string
+     * @return Date
+     */
     public static function nextDate($date, $interval = 1, $newFormat = 'Y-m-d')
     {
         $x            = $this->splitDate($date, 'int');
@@ -407,7 +506,13 @@ class Fn
         return date($newFormat, $nextUnixTime);
     }
 
-    //Date Range Array
+    /**
+     * Date Range Array
+     * @param  Date
+     * @param  Date
+     * @param  string
+     * @return Array
+     */
     public static function dateRangeArray($strDateFrom, $strDateTo, $dateFormat = 'Y-m-d')
     {
         //Mengambil nilai tanggal dari dua tanggal dengan format YYYY-MM-DD
@@ -430,14 +535,18 @@ class Fn
         return $arrayRange;
     }
 
-    //Week Number
+    /**
+     * Week Number
+     * @param  Date
+     * @return Date
+     */
     public static function weekNumber($date)
     {
-        /*
-          fungsi ini untuk mendapatkan nilai minggu ke berapa tanggal tersebut.
-          Week dimulai pada hari senin
-          $date = YYYY-mm-dd
-          returned type: integer
+        /**
+         * fungsi ini untuk mendapatkan nilai minggu ke berapa tanggal tersebut.
+         * Week dimulai pada hari senin
+         * $date = YYYY-mm-dd
+         * returned type: integer
          */
         $x = $this->splitDate($date, 'int');
         //print_r($x);
@@ -446,7 +555,15 @@ class Fn
         return $weekNo;
     }
 
-    //Date to SQL
+    /**
+     * Date To SQL
+     * @param  Date - Year
+     * @param  Date - Month
+     * @param  Date - Day
+     * @param  Date - Year
+     * @param  Date - Year
+     * @return DateSQL
+     */
     public static function dateToSQL($tahun, $bulan, $tanggal, $minTahun = "", $maxTahun = "")
     {
         $tahun   = (int)$tahun;
@@ -492,7 +609,11 @@ class Fn
         return $tanggalSql;
     }
 
-    //Display Date
+    /**
+     * Display Date
+     * @param  Date
+     * @return String
+     */
     public static function displayDate($date)
     {
         $namaBulan = $this->monthList();
@@ -501,7 +622,11 @@ class Fn
         return $namaBulan[$dateInt['month']] . ' ' . $dateInt['date'] . ', ' . $dateInt['year'];
     }
 
-    //Display Date Time
+    /**
+     * Display Date Time
+     * @param  Date
+     * @return String
+     */
     public static function displayDateTime($date)
     {
         $namaBulan  = $this->monthList();
@@ -511,7 +636,12 @@ class Fn
         return $namaBulan[$dateInt['month']] . ' ' . $dateInt['date'] . ', ' . $dateInt['year'] . ' ' . $dateString['hour'] . ':' . $dateString['minute'] . ':' . $dateString['second'];
     }
 
-    //Time Different
+    /**
+     * Time Different
+     * @param  Time
+     * @param  Time
+     * @return String / Integer
+     */
     public static function timeDifferent($time1, $time2)
     {
         $intTime1 = $this->unixTime($time1);
@@ -521,7 +651,11 @@ class Fn
         return $timeDiff;
     }
 
-    //Current Period
+    /**
+     * Current Period
+     * @param  Date
+     * @return Date
+     */
     public static function currentPeriod($period)
     {
         $thisMonth = date('n');
@@ -529,7 +663,13 @@ class Fn
         return ceil($thisMonth / $period);
     }
 
-    //Previous Period
+    /**
+     * Previous Period
+     * @param  Date
+     * @param  Date - Year
+     * @param  Integer
+     * @return Array
+     */
     public static function prevPeriod($period, $year, $number)
     {
         if ($number > 1) {
@@ -541,7 +681,13 @@ class Fn
         }
     }
 
-    //Next Period
+    /**
+     * Next Period
+     * @param  Date
+     * @param  Date - Year
+     * @param  Integer
+     * @return Array
+     */
     public static function nextPeriod($period, $year, $number)
     {
         $maxPeriod = 12 / $period;
@@ -552,7 +698,11 @@ class Fn
         }
     }
 
-    //Period Range
+    /**
+     * @param  Date
+     * @param  integer
+     * @return Array
+     */
     public static function periodRange($period, $length = 0)
     {
         $period     = (int)$period;
@@ -597,7 +747,14 @@ class Fn
         return $result;
     }
 
-    //Period Display
+    /**
+     * Period Display
+     * @param  Date
+     * @param  Date - Year
+     * @param  Integer
+     * @param  integer
+     * @return String
+     */
     public static function periodDisplay($period, $year, $number, $length = 0)
     {
         $periodRange = $this->periodRange($period, $length);
@@ -605,7 +762,11 @@ class Fn
         return $periodRange[$number] . ', ' . $year;
     }
 
-    //Valid Date Form
+    /**
+     * Validate Date Form
+     * @param  Date
+     * @return Date
+     */
     public static function validDateForm($date)
     {
         $isOK = true;
@@ -627,7 +788,11 @@ class Fn
         return $date;
     }
 
-    //Check Valid Date Form
+    /**
+     * Validate DateForm Check
+     * @param  Date
+     * @return boolean
+     */
     public static function isValidDateForm($date)
     {
         if (preg_match("/([0-9]{1,2})\/([0-9]{1,2})\/([0-9]{2,4})/", $date)) {
@@ -645,7 +810,11 @@ class Fn
         return true;
     }
 
-    //Date Form To SQL
+    /**
+     * Date Form To SQL
+     * @param  Date
+     * @return DateSQL
+     */
     public static function dateFormToSQL($date)
     {
         list($d, $m, $y) = @explode("/", $date);
@@ -666,7 +835,11 @@ class Fn
         }
     }
 
-    //SQL Date to Date Form
+    /**
+     * SQL Date To Date Form
+     * @param  Date
+     * @return Date
+     */
     public static function dateSQLToForm($date)
     {
         //if (!empty($date) && $date != "0000-00-00" && $date != "0000-00-00 00:00:00"){
@@ -688,7 +861,11 @@ class Fn
         return '';
     }
 
-    //Max Date in Year
+    /**
+     * Max Date In Year
+     * @param  Date - Year
+     * @return Integer
+     */
     public static function maxDateInYear($year)
     {
         if (($year % 4) == 0) {
@@ -698,7 +875,12 @@ class Fn
         }
     }
 
-    //Max Date in Month
+    /**
+     * Max Date In Month
+     * @param  Date - Month
+     * @param  Date - Year
+     * @return Integer
+     */
     public static function maxDateInMonth($month, $year)
     {
         switch ($month) {
@@ -733,7 +915,12 @@ class Fn
         }
     }
 
-    //Date Range in Week
+    /**
+     * Date Range In Week
+     * @param  integer
+     * @param  integer
+     * @return Array
+     */
     public static function dateRangeInWeek($week = 0, $year = 0)
     {
         /*
@@ -776,7 +963,12 @@ class Fn
         return $dateRange;
     }
 
-    //Week Range in Month
+    /**
+     * Week Range In Month
+     * @param  Date - Month
+     * @param  Date - Year
+     * @return Array
+     */
     public static function weekRangeInMonth($month, $year)
     {
         $year  = (int)$year;
@@ -818,7 +1010,12 @@ class Fn
         return $weekRange;
     }
 
-    //Previous Week
+    /**
+     * Previous Week
+     * @param  Date - Week
+     * @param  Date - Year
+     * @return Array
+     */
     public static function prevWeek($week, $year)
     {
         if ($year >= 1970) {
@@ -840,7 +1037,12 @@ class Fn
         return array('week' => $prevWeek, 'year' => $yearWeek);
     }
 
-    //Next Week
+    /**
+     * Next Week
+     * @param  Date - Week
+     * @param  Date - Year
+     * @return Array
+     */
     public static function nextWeek($week, $year)
     {
         if ($year >= 1970) {
@@ -861,7 +1063,12 @@ class Fn
         return array('week' => $nextWeek, 'year' => $yearWeek);
     }
 
-    //Previous Month
+    /**
+     * Previous Month
+     * @param  Date - Month
+     * @param  Date - Year
+     * @return Array
+     */
     public static function prevMonth($month, $year)
     {
         if ($year >= 1970) {
@@ -877,7 +1084,12 @@ class Fn
         return array('month' => $prevMonth, 'year' => $yearMonth);
     }
 
-    //Next Month
+    /**
+     * Next Month
+     * @param  Date - Month
+     * @param  Date - Year
+     * @return Array
+     */
     public static function nextMonth($month, $year)
     {
         if ($year >= 1970) {
@@ -893,7 +1105,11 @@ class Fn
         return array('month' => $nextMonth, 'year' => $yearMonth);
     }
 
-    //Get Date SQL To Form
+    /**
+     * Date SQL to Form
+     * @param  DateTime
+     * @return String
+     */
     public static function getDateSQLToForm($datetime)
     { 
         //YYYY-mm-dd
@@ -902,7 +1118,11 @@ class Fn
         return $t['date'] . '/' . $t['month'] . '/' . $t['year'];
     }
 
-    //Time to Sec
+    /**
+     * Time To Sec
+     * @param  Time
+     * @return String
+     */
     public static function timeToSec($time)
     {
         // hh:mm:ss
@@ -916,7 +1136,11 @@ class Fn
         return $timetosec;
     }
 
-    //Sec to Time
+    /**
+     * Sec to Time
+     * @param  Sec
+     * @return Time
+     */
     public static function secToTime($sec)
     {
         // int sec
@@ -937,7 +1161,11 @@ class Fn
         return $hour . ':' . $minutes . ':' . $second; // return hh:mm:ss
     }
 
-    //Time to INT
+    /**
+     * Time to Integer
+     * @param  Time
+     * @return Integer
+     */
     public static function timeToInt($time)
     {
         $timeHour = substr($time, 0, 2);
@@ -951,7 +1179,11 @@ class Fn
         return $values;
     }
 
-    //Time to Text
+    /**
+     * Time To Text
+     * @param  Time
+     * @return String
+     */
     public static function timeToText($time)
     {
         $timeHour   = ceil($time * 60);
@@ -961,7 +1193,10 @@ class Fn
         return $hour . ' h ' . $modMinutes . ' m';
     }
 
-    //Random Color
+    /**
+     * Random Color
+     * @return Color
+     */
     public static function randomColor()
     {
         mt_srand((double)microtime() * 1000000);
@@ -972,7 +1207,12 @@ class Fn
         return '#' . $color;
     }
 
-    //Image Decode
+    /**
+     * Image Decode
+     * @param  String
+     * @param  String
+     * @return String
+     */
     public static function imageDecode($string, $outputFile)
     {
         $fopen = fopen($outputFile, "wb");
@@ -985,7 +1225,11 @@ class Fn
         return $outputFile;
     }
 
-    //Image Encode
+    /**
+     * Image Encode
+     * @param  String
+     * @return String
+     */
     public static function imageEncode($fileFullPath)
     {
         $type = pathinfo($fileFullPath, PATHINFO_EXTENSION);
@@ -993,7 +1237,11 @@ class Fn
         return $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
     }
 
-    //URL Slug
+    /**
+     * URL Slugs
+     * @param  String
+     * @return String
+     */
     public static function urlSlug($text)
     { 
       // replace non letter or digits by -
@@ -1019,13 +1267,23 @@ class Fn
       return $text;
     }
 
+    /**
+     * Redirect
+     * @param  String
+     * @param  integer
+     * @return Header
+     */
     public static function redirect($url, $statusCode = 303)
     {
        header('Location: ' . $url, true, $statusCode);
        die();
     }
 
-    //Force Download
+    /**
+     * Force Download
+     * @param  String
+     * @return Download
+     */
     public static function forceDownload($file)
     {
         if (isset($file)&&(file_exists($file))) {
@@ -1038,7 +1296,11 @@ class Fn
         }
     }
 
-    //Ordinal number
+    /**
+     * Ordinal Number
+     * @param  Integer
+     * @return String
+     */
     public static function ordinalNumber($number)
     {
         $ends = array('th','st','nd','rd','th','th','th','th','th','th');
@@ -1049,7 +1311,11 @@ class Fn
         }
     }
 
-    //Validate Email
+    /**
+     * Validate Email
+     * @param  String
+     * @return boolean
+     */
     public static function isValidEmail($email)
     {
         if(preg_match("~([a-zA-Z0-9!#$%&amp;'*+-/=?^_`{|}~])@([a-zA-Z0-9-]).([a-zA-Z0-9]{2,4})~",$email)) {
@@ -1059,7 +1325,12 @@ class Fn
         }
     }
 
-    //Count Month Between Date Range
+    /**
+     * Count Month Between Date
+     * @param  Date
+     * @param  Date
+     * @return Integer
+     */
     public static function countMonthBetweenDate($startDate, $endDate)
     {
     	$d1 = strtotime($startDate);
@@ -1074,7 +1345,12 @@ class Fn
 		echo $i;
     }
 
-    //Get Month List And Month Total Day Between Two Date
+    /**
+     * Get Month List And Month Total
+     * @param  Date
+     * @param  Date
+     * @return Array
+     */
     public static function monthListBetweenDate($startDate, $endDate)
     {
 		$output = [];
@@ -1094,8 +1370,11 @@ class Fn
 		} while ($month != $last);
     }
 
-    //Anti Exploit / Check String
-
+    /**
+     * Check String
+     * @param  String
+     * @return String
+     */
     public function checkString($data)
     {
     	$data = trim($data);
@@ -1104,8 +1383,4 @@ class Fn
 		return $data;
     }
 
-    //End of added by ziki
-
 }
-	$class = new Fn;
-	echo $class->countMonthBetweenDate('2010-06-02','2010-05-02');
