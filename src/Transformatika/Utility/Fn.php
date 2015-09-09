@@ -13,7 +13,7 @@ class Fn
     var $monthNames = 'January,February,March,April,May,June,July,August,September,October,November,December';
     var $dayNames = 'Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday';
 
-    var $month_list = array(
+    var $monthList = array(
         1  => 'January',
         2  => 'February',
         3  => 'March',
@@ -39,6 +39,46 @@ class Fn
         $random            = mt_rand(1000, 8888);
         $uniqid            = ($includeFloatMtime + $random);
         return base_convert($uniqid, 10, 36);
+    }
+
+    /**
+     * Function to create and display error and success messages
+     * @access public
+     * @param string session name
+     * @param string message
+     * @param string display class
+     * @return string message
+     */
+    public static function flash( $name = '', $message = '', $class = 'success fadeout-message' )
+    {
+        //We can only do something if the name isn't empty
+        if( !empty( $name ) )
+        {
+            //No message, create it
+            if( !empty( $message ) && empty( $_SESSION[$name] ) )
+            {
+                if( !empty( $_SESSION[$name] ) )
+                {
+                    unset( $_SESSION[$name] );
+                }
+                if( !empty( $_SESSION[$name.'_class'] ) )
+                {
+                    unset( $_SESSION[$name.'_class'] );
+                }
+
+                $_SESSION[$name]          = $message;
+                $_SESSION[$name.'_class'] = $class;
+            }
+            //Message exists, display it
+            elseif( !empty( $_SESSION[$name] ) && empty( $message ) )
+            {
+                $class   = !empty( $_SESSION[$name.'_class'] ) ? $_SESSION[$name.'_class'] : 'success';
+                $message = $_SESSION[$name];
+                echo '<div class="ui '.$class.' message">'.$message.'</div>';
+                unset($_SESSION[$name]);
+                unset($_SESSION[$name.'_class']);
+            }
+        }
     }
 
     /**
@@ -1275,8 +1315,8 @@ class Fn
      */
     public static function redirect($url, $statusCode = 303)
     {
-       header('Location: ' . $url, true, $statusCode);
-       die();
+        header('Location: ' . $url, true, $statusCode);
+        die();
     }
 
     /**
