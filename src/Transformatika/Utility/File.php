@@ -137,7 +137,7 @@ class File
     */
     public function mimeContentType($file)
     {
-        $result = new finfo();
+        $result = new \finfo();
 
         if (is_resource($result) === true) {
             return $result->file($filename, FILEINFO_MIME_TYPE);
