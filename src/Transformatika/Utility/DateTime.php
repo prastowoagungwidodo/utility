@@ -38,7 +38,7 @@ class DateTime
      * @param  Timestamp / Date
      * @return String
      */
-    public static function humanTime($time, $chunk = false)
+    public static function humanTimeDiff($time, $chunk = false)
     {
         if (!is_integer($time)) {
             $time = strtotime($time);
@@ -54,62 +54,43 @@ class DateTime
             $months = round($different / 2419200);
             $years = round($different / 29030400);
 
-            //Second
             if ($seconds <= 60) {
                 if ($seconds == 1) {
                     return "$seconds second ago";
                 } else {
                     return "$seconds seconds ago";
                 }
-            }
-
-            //Minutes
-            elseif ($minutes <= 60) {
+            } elseif ($minutes <= 60) {
                 if ($minutes == 1) {
                     return "$minutes minute ago";
                 } else {
                     return "$minutes minutes ago";
                 }
-            }
-
-            //Hours
-            elseif ($hours <= 24) {
+            } elseif ($hours <= 24) {
                 if ($hours == 1) {
                     return "$hours hour ago";
                 } else {
                     return "$hours hours ago";
                 }
-            }
-
-            //Days
-            elseif ($days <= 7) {
+            } elseif ($days <= 7) {
                 if ($days = 1) {
                     return "$days day ago";
                 } else {
                     return "$days days ago";
                 }
-            }
-
-            //Weeks
-            elseif ($weeks <= 4) {
+            } elseif ($weeks <= 4) {
                 if ($weeks == 1) {
                     return "$weeks week ago";
                 } else {
                     return "$weeks weeks ago";
                 }
-            }
-
-            //Months
-            elseif ($months <= 12) {
+            } elseif ($months <= 12) {
                 if ($months == 1) {
                     return "$months month ago";
                 } else {
                     return "$months months ago";
                 }
-            }
-
-            //Years
-            else {
+            } else {
                 if ($years == 1) {
                     return "$years year ago";
                 } else {
@@ -129,7 +110,7 @@ class DateTime
      * @param  Date $end   Date end
      * @return array       array date
      */
-    public static function dateArray($begin, $end)
+    public static function dateArray($begin, $end, $format = 'Y-m-d')
     {
         $begin = new \DateTime($begin);
         $end = new \DateTime($end);
@@ -140,10 +121,7 @@ class DateTime
 
         $dateArray = array();
         foreach ($daterange as $date) {
-            $dateArray[] = array(
-                'label' => $date->format('d/m/Y'),
-                'value' => $date->format('Y-m-d')
-            );
+            $dateArray[] = $date->format($format);
         }
 
         return $dateArray;
@@ -163,10 +141,7 @@ class DateTime
         }
         $dateArray = array();
         for ($i = $begin; $i <= $end; ++$i) {
-            $dateArray[] = array(
-                'label' => date('F', strtotime($year.'-'.$i.'-1')),
-                'value' => (int) $i,
-            );
+            $dateArray[] = $i;
         }
         return $dateArray;
     }
@@ -181,11 +156,22 @@ class DateTime
     {
         $dateArray = array();
         for ($i = $begin; $i <= $end; ++$i) {
-            $dateArray[] = array(
-                'label' => $i,
-                'value' => $i,
-            );
+            $dateArray[] = $i;
         }
         return $dateArray;
+    }
+
+    public static function prevDay($date, $format = 'Y-m-d')
+    {
+        $date = new \DateTime($date);
+        $date->modify('tomorrow');
+        return $date->format($format);
+    }
+
+    public static function nextDay($date, $format = 'Y-m-d')
+    {
+        $date = new \DateTime($date);
+        $date->modify('yesterday');
+        return $date->format($format);
     }
 }
