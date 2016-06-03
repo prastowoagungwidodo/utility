@@ -2,6 +2,9 @@
 
 namespace Transformatika\Utility;
 
+/**
+ * Manipulating File
+ */
 class File
 {
     private static $instance;
@@ -55,6 +58,9 @@ class File
 
     public function removeDirectory($dirPath)
     {
+        $dirpath = str_replace('/', DIRECTORY_SEPARATOR, rawurldecode($path));
+        $dirpath = str_replace($this->rootDir, '', $dirpath);
+        $dirpath = $this->rootDir.DIRECTORY_SEPARATOR.$dirPath;
         $error = 0;
         if (is_dir($dirPath)) {
             $objects = scandir($dirPath);
@@ -115,15 +121,21 @@ class File
 
     public function readFile($filePath, $mimeContentType = '')
     {
-        if (file_exists($filePath)) {
+        $filePath = str_replace('/', DIRECTORY_SEPARATOR, $filePath);
+        $filePath = str_replace($this->rootDir, '', $filePath);
+        if (file_exists($this->rootDir . DIRECTORY_SEPARATOR . $filePath)) {
             if (empty($mimeContentType)) {
-                header('Content-Type: ' . $this->mimeContentType($filePath));
-            } else {
-                header('Content-Type: ' . $mimeContentType);
+                $mimeContentType = $this->mimeContentType($this->rootDir . DIRECTORY_SEPARATOR . $filePath);
             }
 
-            header('Content-Length: ' . filesize($filePath));
-            readfile($filePath);
+            header('Content-Type: ' . $mimeContentType);
+
+            if (strstr($mimeContentType, "video/") || strstr($mimeContentType, "audio/")) {
+                $this->bufferFile($this->rootDir . DIRECTORY_SEPARATOR . $filePath);
+            } else {
+                header('Content-Length: ' . filesize($this->rootDir . DIRECTORY_SEPARATOR . $filePath));
+                readfile($this->rootDir . DIRECTORY_SEPARATOR . $filePath);
+            }
         }
     }
 
@@ -277,8 +289,6 @@ class File
         foreach ($ls as $k => $v) {
             if ($v != '.' && $v != '..') {
                 if (is_file($dir . DS . $v)) {
-                    //$filetype = mime_content_type($dir.DS.$v);
-                    //if($filetype == 'IMAGE/JPG' || $filetype == 'IMAGE/PNG' || $filetype == 'IMAGE/JPEG' || $filetype == 'IMAGE/GIF'){
                     $resFile[$i]['type'] = 'file';
                     if ($subDirectory == '/') {
                         $resFile[$i]['url'] = $v;
@@ -332,7 +342,9 @@ class File
 
     public function getFolderSize($dir)
     {
-        //$dir = rtrim(str_replace('\\', '/', $dir), '/');
+        $dir = str_replace('/', DIRECTORY_SEPARATOR, $dir);
+        $dir = str_replace($this->rootDir, '', $dir);
+        $dir = $this->rootDir . DIRECTORY_SEPARATOR . $dir;
 
         if (is_dir($dir) === true) {
             $totalSize = 0;

@@ -174,4 +174,18 @@ class DateTime
         $date->modify('yesterday');
         return $date->format($format);
     }
+
+    public static function isKabisat($tahun)
+    {
+        if ((($tahun % 4 == 0) && ($tahun % 100 != 0)) || ($tahun % 400 == 0)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static function isLeapYear($year)
+    {
+        return self::isKabisat($year);
+    }
 }
