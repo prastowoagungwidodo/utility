@@ -109,4 +109,37 @@ class Str
         }
         return '#' . $c;
     }
+
+    /**
+     * Alias randomColor function
+     * @return [type] [description]
+     */
+    public static function generateRandomColor()
+    {
+        return selff::randomColor();
+    }
+
+    /**
+     * Generate Random String
+     * Exclude 0 and O
+     * @param  integer $length            [description]
+     * @param  [type]  $specialCharacters [description]
+     * @return [type]                     [description]
+     */
+    public static function generateRandomString($length = 32, $specialCharacters = true)
+    {
+        $digits = '';
+        $chars = "abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+
+        if ($specialCharacters === true) {
+            $chars .= "!?=/&+,.";
+        }
+
+        for ($i = 0; $i < $length; $i++) {
+            $x = mt_rand(0, strlen($chars) - 1);
+            $digits .= $chars{$x};
+        }
+
+        return $digits;
+    }
 }
