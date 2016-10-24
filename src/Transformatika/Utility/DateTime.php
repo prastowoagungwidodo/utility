@@ -9,7 +9,7 @@ class DateTime
      * @param  integer $number month in integer
      * @return string
      */
-    public static function monthInRoman($number)
+    public function monthInRoman($number)
     {
         $number = intval($number);
         $romanNumbers = array(
@@ -38,7 +38,7 @@ class DateTime
      * @param  Timestamp / Date
      * @return String
      */
-    public static function humanTimeDiff($time, $chunk = false)
+    public function humanTimeDiff($time, $chunk = false)
     {
         if (!is_integer($time)) {
             $time = strtotime($time);
@@ -110,7 +110,7 @@ class DateTime
      * @param  Date $end   Date end
      * @return array       array date
      */
-    public static function dateArray($begin, $end, $format = 'Y-m-d')
+    public function dateArray($begin, $end, $format = 'Y-m-d')
     {
         $begin = new \DateTime($begin);
         $end = new \DateTime($end);
@@ -134,7 +134,7 @@ class DateTime
      * @param  string $year  Year
      * @return array
      */
-    public static function monthArray($begin, $end, $year = '')
+    public function monthArray($begin, $end, $year = '')
     {
         if (empty($year)) {
             $year = date('Y');
@@ -152,7 +152,7 @@ class DateTime
      * @param  integer  $end   [description]
      * @return array        [description]
      */
-    public static function yearArray($begin, $end)
+    public function yearArray($begin, $end)
     {
         $dateArray = array();
         for ($i = $begin; $i <= $end; ++$i) {
@@ -161,21 +161,21 @@ class DateTime
         return $dateArray;
     }
 
-    public static function prevDay($date, $format = 'Y-m-d')
+    public function prevDay($date, $format = 'Y-m-d')
     {
         $date = new \DateTime($date);
         $date->modify('tomorrow');
         return $date->format($format);
     }
 
-    public static function nextDay($date, $format = 'Y-m-d')
+    public function nextDay($date, $format = 'Y-m-d')
     {
         $date = new \DateTime($date);
         $date->modify('yesterday');
         return $date->format($format);
     }
 
-    public static function isKabisat($tahun)
+    public function isKabisat($tahun)
     {
         if ((($tahun % 4 == 0) && ($tahun % 100 != 0)) || ($tahun % 400 == 0)) {
             return true;
@@ -184,7 +184,7 @@ class DateTime
         }
     }
 
-    public static function isLeapYear($year)
+    public function isLeapYear($year)
     {
         return self::isKabisat($year);
     }

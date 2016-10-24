@@ -1,30 +1,73 @@
 <?php
 namespace Transformatika\Utility;
 
+use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\Exception\UnsatisfiedDependencyException;
+
 class Str
 {
-    public static function validateEmail($str)
+    public function validateEmail($str)
     {
         return filter_var($str, FILTER_VALIDATE_EMAIL);
     }
 
-    public static function validateIP($str)
+    public function validateIP($str)
     {
         return filter_var($str, FILTER_VALIDATE_IP);
+    }
+
+    public function getId($version = 4, $includeDash = false)
+    {
+        return $this->generateId($version, $includeDash);
+    }
+
+    public function getUUID($version = 4, $includeDash = false)
+    {
+        return $this->generateId($version, $includeDash);
+    }
+
+    public function uuid($version = 4, $includeDash = false)
+    {
+        return $this->generateId($version, $includeDash);
     }
 
     /**
      * Generate ID
      * @return String
      */
-    public static function generateId()
+    public function generateId($version = 4, $includeDash = false)
     {
-        usleep(1);
-        $microtime         = microtime(true);
-        $includeFloatMtime = str_replace(array('.', '.'), '', $microtime);
-        $random            = mt_rand(1000, 8888);
-        $uniqid            = ($includeFloatMtime + $random);
-        return base_convert($uniqid, 10, 36);
+
+        try {
+            switch ($version) {
+                case 1:
+                    $uuid = Uuid::uuid1();
+
+                    break;
+
+                case 3:
+                    $uuid = Uuid::uuid3(Uuid::NAMESPACE_DNS, php_uname('n'));
+
+                    break;
+                case 5:
+                    $uuid = Uuid::uuid5(Uuid::NAMESPACE_DNS, php_uname('n'));
+
+                    break;
+                default:
+                    $uuid = Uuid::uuid4();
+
+                    break;
+            }
+
+            return $includeDash ? $uuid->toString() : str_replace('-', '', $uuid->toString());
+
+        } catch (UnsatisfiedDependencyException $e) {
+
+            // Some dependency was not met. Either the method cannot be called on a
+            // 32-bit system, or it can, but it relies on Moontoast\Math to be present.
+            echo 'Caught exception: ' . $e->getMessage() . "\n";
+            exit();
+        }
     }
 
     /**
@@ -33,7 +76,7 @@ class Str
      * @param  Integer
      * @return String
      */
-    public static function limitChar($content, $limit = 100)
+    public function limitChar($content, $limit = 100)
     {
         if (strlen($content) <= $limit) {
             return $content;
@@ -49,7 +92,7 @@ class Str
      * @param  Integer
      * @return String
      */
-    public static function limitWord($string, $limit = 10)
+    public function limitWord($string, $limit = 10)
     {
         $words = explode(" ", $string);
         return implode(" ", array_splice($words, 0, $limit));
@@ -61,7 +104,7 @@ class Str
      * @param  String
      * @return String
      */
-    public static function urlSlug($text)
+    public function urlSlug($text)
     {
         // replace non letter or digits by -
         $text = preg_replace('~[^\\pL\d]+~u', '-', $text);
@@ -100,7 +143,7 @@ class Str
     /**
     * Generate Random Color
     */
-    public static function randomColor()
+    public function randomColor()
     {
         mt_srand((double)microtime() * 1000000);
         $c = '';
@@ -114,9 +157,9 @@ class Str
      * Alias randomColor function
      * @return [type] [description]
      */
-    public static function generateRandomColor()
+    public function generateRandomColor()
     {
-        return selff::randomColor();
+        return $this->randomColor();
     }
 
     /**
@@ -126,7 +169,7 @@ class Str
      * @param  [type]  $specialCharacters [description]
      * @return [type]                     [description]
      */
-    public static function generateRandomString($length = 32, $specialCharacters = true)
+    public function generateRandomString($length = 32, $specialCharacters = true)
     {
         $digits = '';
         $chars = "abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789";

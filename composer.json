@@ -21,5 +21,8 @@
 		"psr-0" : {
 			"Transformatika\\Utility\\" : "src/"
 		}
+	},
+	"require": {
+		"ramsey/uuid": "^3.5"
 	}
 }

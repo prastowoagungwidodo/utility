@@ -10,7 +10,7 @@ class Number
      * @param  integer $precision [description]
      * @return [type]             [description]
      */
-    public static function formatBytes($size, $precision = 2)
+    public function formatBytes($size, $precision = 2)
     {
         $base = log($size) / log(1024);
         $suffixes = array('', 'KB', 'MB', 'GB', 'TB');
@@ -24,7 +24,7 @@ class Number
      * @param  Integer
      * @return Integer
      */
-    public static function zeroNumber($number = 0, $length = 5)
+    public function zeroNumber($number = 0, $length = 5)
     {
         $no = '';
         if (strlen($number) < $length) {
@@ -44,7 +44,7 @@ class Number
      * @param  Boolean
      * @return String
      */
-    public static function decimalToAlphanumeric($number, $base = 64, $index = false)
+    public function decimalToAlphanumeric($number, $base = 64, $index = false)
     {
         if (!$base) {
             $base = strlen($index);
@@ -67,7 +67,7 @@ class Number
      * @param  Integer
      * @return String
      */
-    public static function ordinalNumber($number)
+    public function ordinalNumber($number)
     {
         $ends = array('th','st','nd','rd','th','th','th','th','th','th');
         if ((($number % 100) >= 11) && (($number%100) <= 13)) {
